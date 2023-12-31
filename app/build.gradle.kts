@@ -82,7 +82,7 @@ dependencies {
 
     // ViewModel Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
