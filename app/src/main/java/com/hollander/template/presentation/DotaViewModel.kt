@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +25,7 @@ class DotaViewModel @Inject constructor(
             try {
                 val heroes = dotaRepository.getHeroes()
                 _action.value = Action.ShowHeroes(heroes)
+                Timber.d("${heroes.size} heroes loaded successfully")
             } catch (e: Exception) {
                 _action.value = Action.Error
             }
