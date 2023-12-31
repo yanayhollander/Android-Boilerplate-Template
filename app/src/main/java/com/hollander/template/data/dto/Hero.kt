@@ -1,4 +1,4 @@
-package com.hollander.template.data.remote.repository
+package com.hollander.template.data.dto
 
 data class Hero(
     val id: Int,

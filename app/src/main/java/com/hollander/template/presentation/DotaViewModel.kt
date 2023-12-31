@@ -1,23 +1,18 @@
 package com.hollander.template.presentation
 
-import android.app.Notification.Action
-import androidx.lifecycle.ViewModel
-import com.hollander.template.data.remote.repository.Hero
+import com.hollander.template.data.dto.Hero
+import com.hollander.template.domain.repository.DatabaseRepository
 import com.hollander.template.domain.repository.DotaRepository
 import com.hollander.template.presentation.viewModel.AsyncViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @HiltViewModel
 class DotaViewModel @Inject constructor(
-    private val dotaRepository: DotaRepository
+    private val dotaRepository: DotaRepository,
+    private val databaseRepository: DatabaseRepository
 ) : AsyncViewModel() {
 
     private val _action = MutableStateFlow<Action?>(null)
@@ -27,6 +22,7 @@ class DotaViewModel @Inject constructor(
         launchWithState {
             val heroes = dotaRepository.getHeroes()
             _action.value = Action.ShowHeroes(heroes)
+            databaseRepository.saveHeroes(heroes, force = true)
             Timber.d("${heroes.size} heroes loaded successfully")
         }
     }

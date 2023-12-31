@@ -1,6 +1,9 @@
 package com.hollander.template.di
 
-import com.hollander.template.data.remote.DotaApi
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import com.hollander.template.data.api.DotaApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,5 +24,11 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DotaApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirestore(): FirebaseFirestore {
+        return Firebase.firestore
     }
 }
