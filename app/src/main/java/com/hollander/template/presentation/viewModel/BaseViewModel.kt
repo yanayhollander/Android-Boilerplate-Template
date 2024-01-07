@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-abstract class AsyncViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -17,13 +17,14 @@ abstract class AsyncViewModel : ViewModel() {
     val error: LiveData<String>
         get() = _error
 
+
     fun launchWithState(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
                 block(this)
             } catch (e: Exception) {
-                onError("${e.message}")
+                _error.value = "${e.message}"
             } finally {
                 _isLoading.value = false
             }
@@ -35,12 +36,8 @@ abstract class AsyncViewModel : ViewModel() {
             try {
                 block(this)
             } catch (e: Exception) {
-                onError("${e.message}")
+                _error.value = "${e.message}"
             }
         }
-    }
-
-    protected fun onError(message: String) {
-        _error.value = message
     }
 }

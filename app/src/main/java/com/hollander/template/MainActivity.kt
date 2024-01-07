@@ -20,9 +20,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hollander.template.presentation.DotaViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.hollander.template.presentation.dota.DotaViewModel
 import com.hollander.template.presentation.composables.ErrorComposable
 import com.hollander.template.presentation.composables.Loading
+import com.hollander.template.presentation.dota.HeroesRoute
 import com.hollander.template.ui.theme.AndroidTemplateTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,77 +42,20 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingScreen(dotaViewModel)
-                }
-            }
-        }
-    }
-}
+                    val navController = rememberNavController()
 
-@Composable
-fun GreetingScreen(dotaViewModel: DotaViewModel, modifier: Modifier = Modifier) {
-
-    val action by dotaViewModel.action.collectAsState()
-    val isLoading = dotaViewModel.isLoading.observeAsState(false)
-    val error = dotaViewModel.error.observeAsState()
-
-    if (isLoading.value) {
-        Loading()
-        return
-    }
-
-    error.value?.let {
-        ErrorComposable(message = it)
-        return
-    }
-
-    when (action) {
-        is DotaViewModel.Action.ShowHeroes -> {
-            val heroes = (action as DotaViewModel.Action.ShowHeroes).heroes
-            val content = buildString {
-                append("Heroes:\n")
-                for (hero in heroes) {
-                    append("${hero.localized_name}\n")
-                }
-            }
-
-            BoxWithConstraints {
-                LazyColumn(
-                    modifier = modifier
-                        .fillMaxSize()
-                ) {
-                    item {
-                        Text(
-                            text = content,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            maxLines = Int.MAX_VALUE,
-                            overflow = TextOverflow.Clip
-                        )
+                    NavHost(navController = navController, startDestination = "heroesList") {
+                        composable("heroesList") {
+                            HeroesRoute(onItemClicked = { routeId ->
+                                navController.navigate(routeId)
+                            })
+                        }
+//                        composable("summarize") {
+//                            SummarizeRoute()
+//                        }
                     }
                 }
             }
         }
-
-        null -> {}
-    }
-
-
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidTemplateTheme {
-        Greeting("Hello Android", Modifier)
     }
 }

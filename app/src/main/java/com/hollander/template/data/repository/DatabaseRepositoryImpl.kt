@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class DatabaseRepositoryImpl @Inject constructor(
     private val db: FirebaseFirestore
-): DatabaseRepository {
+) : DatabaseRepository {
     private val heroesRef = db.collection("heroes")
     override suspend fun saveHeroes(heroes: List<Hero>, force: Boolean) {
         if (force) {
@@ -24,7 +24,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     private suspend fun saveHeroes(heroes: List<Hero>) {
         val batch = db.batch()
         heroes.forEach { hero ->
-            batch.set(heroesRef.document(hero.localized_name), hero)
+            batch.set(heroesRef.document(hero.localizedName), hero)
         }
         batch.commit().await()
     }

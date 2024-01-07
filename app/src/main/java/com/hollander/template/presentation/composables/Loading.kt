@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hollander.template.Greeting
 import com.hollander.template.ui.theme.AndroidTemplateTheme
 
 @Composable
