@@ -27,6 +27,19 @@ class DotaViewModel @Inject constructor(
         }
     }
 
+    fun getHero(heroId: Int?): Hero {
+        when (_action.value) {
+            is UiState.ShowHeroes -> {
+                val heroes = (_action.value as UiState.ShowHeroes).heroes
+                return heroes.first { it.id == heroId }
+            }
+
+            else -> {
+                throw Exception("Heroes not loaded")
+            }
+        }
+    }
+
     sealed interface UiState {
         data object Initial : UiState
         data class ShowHeroes(val heroes: List<Hero>) : UiState

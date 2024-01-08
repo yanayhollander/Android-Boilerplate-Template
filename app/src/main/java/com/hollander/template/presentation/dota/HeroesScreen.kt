@@ -33,13 +33,13 @@ import com.hollander.template.data.dto.Hero
 import com.hollander.template.presentation.composables.ErrorComposable
 import com.hollander.template.presentation.composables.Loading
 import com.hollander.template.ui.theme.AndroidTemplateTheme
-import timber.log.Timber
 
 @Composable
 internal fun HeroesRoute(
     viewModel: DotaViewModel = hiltViewModel<DotaViewModel>(),
-    onItemClicked: (String) -> Unit
+    onItemClicked: (Hero) -> Unit
 ) {
+
     val action by viewModel.action.collectAsState()
     val isLoading = viewModel.isLoading.observeAsState(false)
     val error = viewModel.error.observeAsState()
@@ -48,7 +48,9 @@ internal fun HeroesRoute(
         isLoading = isLoading.value,
         error = error.value,
         action = action,
-        onHeroClicked = { Timber.d("Hero clicked: $it") }
+        onHeroClicked = {
+            onItemClicked(it)
+        }
     )
 }
 
@@ -58,7 +60,7 @@ fun HeroesScreen(
     isLoading: Boolean,
     action: DotaViewModel.UiState,
     error: String?,
-    onHeroClicked: (String) -> Unit = {},
+    onHeroClicked: (Hero) -> Unit = {},
 ) {
 
     if (isLoading) {
@@ -79,7 +81,7 @@ fun HeroesScreen(
                         HeroCard(
                             modifier = modifier.padding(4.dp),
                             hero = it,
-                            onClick = { onHeroClicked(it.localizedName) }
+                            onClick = { onHeroClicked(it) }
                         )
                     }
                 }
