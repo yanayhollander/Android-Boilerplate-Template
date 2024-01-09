@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import com.google.gson.Gson
 import com.hollander.template.data.api.DotaApi
 import dagger.Module
 import dagger.Provides
@@ -39,5 +40,11 @@ object AppModule {
     @Provides
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGson(): Gson {
+        return Gson()
     }
 }
