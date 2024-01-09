@@ -81,6 +81,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation("com.jakewharton.timber:timber:5.0.1")
+    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
     implementation("io.coil-kt:coil-compose:2.5.0")
 
@@ -100,6 +102,8 @@ dependencies {
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-firestore")
+
+
 }
 
 // Allow references to generated code

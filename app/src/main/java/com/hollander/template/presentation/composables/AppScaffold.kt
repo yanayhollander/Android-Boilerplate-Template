@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -16,11 +17,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
+import com.chuckerteam.chucker.api.Chucker
+import com.hollander.template.BuildConfig
 import com.hollander.template.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,15 +39,24 @@ fun AppScaffold(
     onBackButtonClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
     Scaffold(
         topBar =
         {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        text = title,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
+                    ClickableText(
+                        text = AnnotatedString(title),
+                        onClick = {
+                            if (BuildConfig.DEBUG) {
+                                startActivity(context, Chucker.getLaunchIntent(context), null)
+                            }
+                        },
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            color = Color.Black
+                        )
                     )
                 },
                 navigationIcon = {
