@@ -14,6 +14,7 @@ class DotaRepositoryImpl @Inject constructor(
     appContext: Application,
     private val gson: Gson
 ) : DotaRepository {
+
     private var heroes by appContext.sharedPreferences("heroesList")
 
     override suspend fun getHeroes(): List<Hero> {

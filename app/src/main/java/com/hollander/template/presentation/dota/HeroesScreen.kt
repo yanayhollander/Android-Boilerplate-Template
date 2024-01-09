@@ -30,6 +30,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.hollander.template.data.dto.Hero
+import com.hollander.template.presentation.composables.AppScaffold
 import com.hollander.template.presentation.composables.ErrorComposable
 import com.hollander.template.presentation.composables.Loading
 import com.hollander.template.ui.theme.AndroidTemplateTheme
@@ -39,19 +40,22 @@ internal fun HeroesRoute(
     viewModel: DotaViewModel = hiltViewModel<DotaViewModel>(),
     onItemClicked: (Hero) -> Unit
 ) {
-
     val action by viewModel.action.collectAsState()
     val isLoading = viewModel.isLoading.observeAsState(false)
     val error = viewModel.error.observeAsState()
 
-    HeroesScreen(
-        isLoading = isLoading.value,
-        error = error.value,
-        action = action,
-        onHeroClicked = {
-            onItemClicked(it)
-        }
-    )
+    AppScaffold(
+        title = "Main Screen",
+        content = {
+            HeroesScreen(
+                isLoading = isLoading.value,
+                error = error.value,
+                action = action,
+                onHeroClicked = {
+                    onItemClicked(it)
+                }
+            )
+        })
 }
 
 @Composable

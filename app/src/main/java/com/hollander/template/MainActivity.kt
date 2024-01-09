@@ -60,7 +60,10 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             HeroDetailsRoute(
                                 viewModel = viewModel,
-                                heroId = it.arguments?.getInt("heroId")
+                                heroId = it.arguments?.getInt("heroId"),
+                                onBackButtonClick = {
+                                    navController.popBackStack()
+                                }
                             )
                         }
                     }
