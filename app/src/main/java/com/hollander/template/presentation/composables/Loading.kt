@@ -8,6 +8,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hollander.template.ui.theme.AndroidTemplateTheme
@@ -23,6 +24,7 @@ fun Loading() {
             modifier = Modifier
                 .scale(0.5f) // Adjust the scale factor to control the size
                 .fillMaxSize()
+                .testTag("CircularProgressIndicator")
         )
     }
 }

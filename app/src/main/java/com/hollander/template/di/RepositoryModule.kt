@@ -1,7 +1,9 @@
 package com.hollander.template.di
 
+import com.hollander.template.data.repository.ConfigRepositoryImpl
 import com.hollander.template.data.repository.DatabaseRepositoryImpl
 import com.hollander.template.data.repository.DotaRepositoryImpl
+import com.hollander.template.domain.repository.ConfigRepository
 import com.hollander.template.domain.repository.DatabaseRepository
 import com.hollander.template.domain.repository.DotaRepository
 import dagger.Binds
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindDatabaseRepository(
         databaseRepositoryImpl: DatabaseRepositoryImpl
     ): DatabaseRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindConfigRepository(
+        configRepositoryImpl: ConfigRepositoryImpl
+    ): ConfigRepository
 }

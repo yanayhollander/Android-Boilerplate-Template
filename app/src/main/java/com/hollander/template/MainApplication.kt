@@ -1,15 +1,22 @@
 package com.hollander.template
 
 import android.app.Application
+import com.hollander.template.domain.repository.ConfigRepository
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
+
 
 @HiltAndroidApp
-class MainApplication : Application() {
+open class MainApplication : Application() {
+
+    @Inject
+    lateinit var configRepository: ConfigRepository
+
     override fun onCreate() {
         super.onCreate()
 
-        if (BuildConfig.DEBUG) {
+        if (configRepository.isDebugMode()) {
             Timber.plant(Timber.DebugTree())
         }
     }

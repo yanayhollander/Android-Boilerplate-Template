@@ -73,5 +73,4 @@ object AppModule {
     fun provideGson(): Gson {
         return Gson()
     }
-
 }
