@@ -1,4 +1,4 @@
-# Android Project Template
+# Android Boilerplate Template
 
 This is a template for Android projects, designed to provide a solid starting point for professional, high-quality Android apps. It follows best practices for Android development, as recommended by Google, and includes a variety of features and plugins that developers commonly need.
 
